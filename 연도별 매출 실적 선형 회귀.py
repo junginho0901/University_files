@@ -15,6 +15,7 @@ plt.scatter(X,y,color='black')
 y_pred=reg.predict(X)
 print(reg.coef_)
 print(reg.intercept_)
+print(reg.predict([[2020]])
 plt.plot(X,y_pred,color='blue',linewidth=3)
 
 plt.show()
