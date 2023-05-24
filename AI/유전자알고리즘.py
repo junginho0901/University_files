@@ -1,10 +1,10 @@
 import random
 
-POPULATION_SIZE = 4
-MUTATION_RATE = 0.1
-SIZE = 5
+POPULATION_SIZE = 4 #개체 집단의 크기
+MUTATION_RATE = 0.1 #돌연변이 확률
+SIZE = 5 #하나의 염색체에서 유전자 개수
 
-# 염색체를 클래스로 정의
+# 염색체를 클래스로 정의한다
 class Chromosome :
     def __init__(self,g=[]):
         self.genes = g.copy() # 유전자는 리스트로 구현
@@ -16,7 +16,7 @@ class Chromosome :
                 else: self.genes.append(0)
                 i+=1
 
-    def cal_fitness(self): 
+    def cal_fitness(self): #적합도를 계산한다 
         self.fitness = 0
         value = 0
         for i in range(SIZE): # 이진수 계산
@@ -27,7 +27,7 @@ class Chromosome :
     def __str__(self): # 객체를 문자열로 변환하여 반환
         return self.genes.__str__()
     
-# 염색체와 적합도를 출력
+# 염색체와 적합도를 출력한다
 def print_p(pop):
     i = 0
     for x in pop:
@@ -35,7 +35,7 @@ def print_p(pop):
         i+=1
     print("")
 
-# 선택 연산
+# 선택 연산(룰렛 휠 선택)
 def select(pop):
     max_value = sum([c.cal_fitness() for c in population]) 
     pick = random.uniform(0,max_value)
@@ -52,13 +52,13 @@ def crossover(pop):
     father = select(pop)
     mother = select(pop)
     index = random.randint(1,SIZE-1) # 1 부터 SIZE -1 사이의 정수 랜덤 반환
-    child1 = father.genes[:index] + mother.genes[index:]
-    child2 = mother.genes[:index] + father.genes[index:]
+    child1 = father.genes[:index] + mother.genes[index:] #교차
+    child2 = mother.genes[:index] + father.genes[index:] #교차
     return (child1,child2)
 
 # 돌연변이 연산
 def mutate(c):
-    for i in range(SIZE): # i += 1
+    for i in range(SIZE): #0부터 SIZE 사이를 반환
         if random.random() < MUTATION_RATE: # random.random() 0.0 ~ 1.0 사이의 float형 랜덤 반환
             if random.random() < 0.5:
                 c.genes[i] = 1
@@ -69,7 +69,7 @@ def mutate(c):
 population = []
 i = 0
 
-# 초기 염색체를 생성하여 객체 집단에 추가
+# 초기 염색체를 생성하여 객체 집단에 추가한다
 
 while i < POPULATION_SIZE: # population 리스트에 염색체 추가
    population.append(Chromosome())
